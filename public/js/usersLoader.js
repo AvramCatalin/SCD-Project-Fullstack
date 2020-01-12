@@ -11,13 +11,12 @@ function loadUsers() {
 }
 
 function displayUsers(users) {
-    if (!document.querySelector('.user-container')) {
-        var usersContainer = document.querySelector('#usersContainer');
-        users.forEach(user => {
-            usersContainer.innerHTML += `\n<p id="${user.email}" class="user-container">${user.firstName} ${user.lastName}</p>`;
-        });
-        makeUsersSelectable();
-    }
+    var usersContainer = document.querySelector('#usersContainer');
+    usersContainer.innerHTML = `<h4 class="with-text-centered">Utilizatori</h4>`;
+    users.forEach(user => {
+        usersContainer.innerHTML += `\n<p id="${user.email}" class="user-container">${user.firstName} ${user.lastName}</p>`;
+    });
+    makeUsersSelectable();
 }
 
 function makeUsersSelectable() {
