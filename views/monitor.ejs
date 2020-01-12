@@ -1,0 +1,51 @@
+<%- include('partials/header') %>
+
+<% let currentDate = new Date(); %>
+<% let year = currentDate.getFullYear(); %>
+<% let month = (currentDate.getMonth() + 1); %>
+<% let day = currentDate.getDate(); %>
+<% if(month<10) {month = '0' + month} %>
+<% if(day<10) {day = '0' + day} %>
+
+<div class="container">
+    <h1>Pagina De Monitorizare!</h1>
+    <div class="tracking-container">
+        <div class="row">
+            <div class="col-3">
+                <h3 class="with-text-centered">Bine ai venit!</h3>
+                <h6 class="text-important with-text-centered"><%= adminEmail %></h6>
+                <a class="btn btn-secondary btn-sm centered" href="/logout">Logout!</a>
+                <hr>
+                <button onclick="loadUsers()"
+                    class="btn btn-secondary btn-sm centered spaced-up-down">Afiseaza utilizatorii!</button>
+                <hr>
+                <div class="form-group">
+                    <label for="startDate">Start Date</label>
+                    <input type="date" max="<%= year + "-" + month + "-" + day %>" class="form-control" name="startDate"
+                        id="startDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="endDate">End Date</label>
+                    <input type="date" max="<%= year + "-" + month + "-" + day %>" class="form-control" name="endDate"
+                        id="endDate" required>
+                </div>
+                <button onclick="loadUserData()"
+                    class="btn btn-secondary btn-sm centered spaced-up-down">Cautare!</button>
+            </div>
+            <div id="usersContainer" class="col-2 with-border-sides">
+                <h4 class="with-text-centered">Utilizatori</h4>
+                
+            </div>
+            <div class="col-7">
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/usersLoader.js"></script>
+<script src="/js/monitorManager.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=<%=googleMapsKey%>" async defer></script>
+
+<%- include('partials/footer') %>
