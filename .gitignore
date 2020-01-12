@@ -1,6 +1,9 @@
 # VsCode
 .vscode/
 
+# Ignore key
+googleMapsKey.js
+
 # Logs
 logs
 *.log
