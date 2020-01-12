@@ -54,12 +54,8 @@ router.get('/', middleware.redirectLogin, function (req, res) {
             if (user !== null) {
                 var dataToSend = [];
                 user.location.forEach(loc => {
-                    let dateString = String(loc.date).substring(0, 15);
-                    console.log(dateString);
-                    console.log(loc.date);
-                    console.log(Date.parse(dateString));
-                    console.log('! ' + Date.parse('2020-01-06'));
-                    if (dateChecker(req.query.start, req.query.end, Date.parse(dateString))) {
+                    let stringDate = constructDate(loc.date);
+                    if (dateChecker(req.query.start, req.query.end, Date.parse(stringDate))) {
                         dataToSend.push({
                             lat: loc.lat,
                             long: loc.long
@@ -81,6 +77,21 @@ router.get('/', middleware.redirectLogin, function (req, res) {
         Additional Function
 =================================
 */
+function constructDate(date)
+{
+    let day = date.getDate();
+    if(day < 10)
+    {
+        day = '0' + day;
+    }
+    let month = date.getMonth() + 1;
+    if(month < 10)
+    {
+        month = '0' + month;
+    }
+    let year = date.getFullYear();
+    return (`${year}-${month}-${day}`);
+}
 
 function dateChecker(startDate, endDate, date) {
     if ((startDate === "") && (endDate === "")) {
