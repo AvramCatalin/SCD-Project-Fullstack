@@ -2,7 +2,6 @@ const express = require("express");
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 const middleware = require('../middleware');
-const googleMapsKey = require('../keys/googleMapsKey')
 const router = express.Router();
 
 /*
@@ -93,10 +92,7 @@ router.get('/logout', middleware.denyLogout, function (req, res) {
 */
 
 router.get('/monitor', middleware.redirectLogin, function (req, res) {
-    res.render('monitor', {
-        adminEmail: req.session.adminEmail,
-        googleMapsKey: googleMapsKey
-    });
+    res.render('monitor', {adminEmail: req.session.adminEmail});
 });
 
 module.exports = router;
