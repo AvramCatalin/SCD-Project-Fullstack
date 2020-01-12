@@ -1,8 +1,8 @@
 # SCD-Project-Fullstack
 Tracking app (Backend and Frontend)
 
-Click Here to acces the Mobile (Android) part of the project!
-[Mobile](https://github.com/AvramCatalin/SCD-Project-Mobile)
+Click [Here](https://github.com/AvramCatalin/SCD-Project-Mobile)
+ to acces the Mobile (Android) part of the project!
 
 Make sure to open the app with one of the following commands:
 <p><strong>GOOGLE_MAPS_KEY=<em>YourKey</em> nodemon</strong><p> OR
