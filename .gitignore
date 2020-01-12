@@ -1,5 +1,8 @@
 # VsCode
-.vscode
+.vscode/
+
+# Keys
+keys/
 
 # Logs
 logs
