@@ -1,9 +1,6 @@
 # VsCode
 .vscode/
 
-# Keys
-keys/
-
 # Logs
 logs
 *.log
