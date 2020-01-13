@@ -11,7 +11,7 @@ const router = express.Router();
 */
 
 router.get('/register', middleware.redirectMonitor, function (req, res) {
-    res.render('register', { error: "" });
+    res.render('register', { error: req.query.error });
 });
 
 router.post('/admin', middleware.redirectMonitor, middleware.validRegister, function (req, res) {
@@ -36,7 +36,7 @@ router.post('/admin', middleware.redirectMonitor, middleware.validRegister, func
                 }
             });
         } else {
-            res.status(400).render('register', { error: "Exista deja un user cu acest email!" });
+            res.status(400).send();
         }
     })
 });

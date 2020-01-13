@@ -26,23 +26,43 @@ function formToJSON() {
     object[key] = value;
   });
   var json = JSON.stringify(object);
-  sendJSON(json);
+  pathSetter(json);
 }
 
-function sendJSON(json) {
+function pathSetter(json) {
+  var path = window.location.pathname;
+
+  var nextPagePath;
+  var errorPath;
+  var postPath;
+
+  if (path === '/login' || path === '/login/') {
+    nextPagePath = '/monitor';
+    errorPath = '/login/?error=Date de autentificare gresite!';
+    postPath = '/login';
+  }
+  else if (path === '/register' || path === '/register/') {
+    nextPagePath = '/login';
+    errorPath = '/register/?error=Exista deja un utilizator cu acest email!';
+    postPath = '/admin'
+  }
+  sendJSON(nextPagePath, errorPath, postPath, json)
+}
+
+function sendJSON(nextPagePath, errorPath, postPath, json) {
   //ready state de 4 => Done
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-      window.location.replace('/monitor');
+      window.location.replace(nextPagePath);
     }
     else {
       if (this.status == 400) {
-        window.location.replace('/login/?error=Date de autentificare gresite!');
+        window.location.replace(errorPath);
       }
     }
   };
-  xhttp.open('POST', '/login', true);
+  xhttp.open('POST', postPath, true);
   xhttp.setRequestHeader('Content-Type', 'application/json');
   xhttp.send(json);
 }
