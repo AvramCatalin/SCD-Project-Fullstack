@@ -1,6 +1,7 @@
 //importam modulele instalate cu npm
 const express = require('express');
 const mongoose = require('mongoose');
+const config = require('config');
 const session = require('express-session');
 
 //importam fisierele de 'routes'
@@ -12,6 +13,15 @@ const locationRoutes = require('./routes/locations');
 const app = express();
 const url = 'mongodb://localhost:27017';
 const port = 3000;
+
+if (!config.get('jwtPrivateKey')) {
+    console.error('FATAL ERROR: jwtPrivateKey is not defined!');
+    process.exit(1);
+}
+
+if (!config.get('googleMapsKey')) {
+    console.error('ERROR: googleMapsKey is not defined!');
+}
 
 //setam express sa foloseasca json
 app.use(express.json());
