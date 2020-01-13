@@ -36,7 +36,7 @@ router.post('/admin', middleware.redirectMonitor, middleware.validRegister, func
                 }
             });
         } else {
-            res.render('register', { error: "Exista deja un user cu acest email!" });
+            res.status(400).render('register', { error: "Exista deja un user cu acest email!" });
         }
     })
 });
@@ -48,7 +48,7 @@ router.post('/admin', middleware.redirectMonitor, middleware.validRegister, func
 */
 
 router.get('/login', middleware.redirectMonitor, function (req, res) {
-    res.render('login', { error: "" });
+    res.render('login', { error: req.query.error });
 });
 
 router.post('/login', middleware.redirectMonitor, middleware.validLogin, function (req, res) {
@@ -63,12 +63,12 @@ router.post('/login', middleware.redirectMonitor, middleware.validLogin, functio
                     res.redirect('/monitor');
                 }
                 else {
-                    res.render('login', { error: "Date de autentificare gresite!" });
+                    res.status(400).send();
                 }
             }
             //altfel daca userul nu a fost gasit
             else {
-                res.render('login', { error: "Date de autentificare gresite!" });
+                res.status(400).send();
             }
         }
     });

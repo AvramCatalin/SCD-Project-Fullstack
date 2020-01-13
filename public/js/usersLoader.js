@@ -7,6 +7,7 @@ function loadUsers() {
         }
     };
     xhttp.open('GET', '/users', true);
+    xhttp.setRequestHeader('Content-Type', 'application/json');
     xhttp.send();
 }
 

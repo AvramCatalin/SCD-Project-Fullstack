@@ -17,9 +17,6 @@ const port = 3000;
 //setam express sa foloseasca json
 app.use(express.json());
 
-//setam express sa foloseasca bodyParsers (pt formurile web)
-app.use(bodyParser.urlencoded({ extended: true }));
-
 //setam optiunea pentru a putea accesa fisiere js si css din interiorul celor ejs 
 app.use('/', express.static(__dirname + '/public'));
 
