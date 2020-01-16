@@ -1,5 +1,6 @@
-const express = require("express");
+const express = require('express');
 const bcrypt = require('bcryptjs');
+const config = require('config');
 const User = require('../models/user');
 const middleware = require('../middleware');
 const router = express.Router();
@@ -63,12 +64,12 @@ router.post('/login', middleware.redirectMonitor, middleware.validLogin, functio
                     res.redirect('/monitor');
                 }
                 else {
-                    res.status(400).send();
+                    res.status(404).send();
                 }
             }
             //altfel daca userul nu a fost gasit
             else {
-                res.status(400).send();
+                res.status(404).send();
             }
         }
     });
@@ -92,7 +93,10 @@ router.get('/logout', middleware.denyLogout, function (req, res) {
 */
 
 router.get('/monitor', middleware.redirectLogin, function (req, res) {
-    res.render('monitor', {adminEmail: req.session.adminEmail});
-});
+    res.render('monitor', {
+        adminEmail: req.session.adminEmail,
+        googleMapsKey: config.get('googleMapsKey')
+    });
+});   
 
 module.exports = router;

@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require('express');
 const User = require('../models/user');
 const middleware = require('../middleware');
 const router = express.Router({ mergeParams: true });
@@ -11,7 +11,7 @@ const router = express.Router({ mergeParams: true });
 =================================
 */
 
-router.post('/', middleware.validLocation, function (req, res) {
+router.post('/', middleware.validToken, middleware.validLocation, function (req, res) {
     User.findOne({ email: req.params.userEmail }, function (err, user) {
         if (err) {
             console.log(err);
@@ -62,6 +62,7 @@ router.get('/', middleware.redirectLogin, function (req, res) {
                         });
                     }
                 });
+                console.log(dataToSend);
                 res.send(dataToSend);
             }
             else {

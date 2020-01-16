@@ -19,6 +19,11 @@ if (!config.get('jwtPrivateKey')) {
     process.exit(1);
 }
 
+if (!config.get('sessionKey')) {
+    console.error('FATAL ERROR: sessionKey is not defined!');
+    process.exit(1);
+}
+
 if (!config.get('googleMapsKey')) {
     console.error('ERROR: googleMapsKey is not defined!');
 }
@@ -33,7 +38,7 @@ app.use('/', express.static(__dirname + '/public'));
 app.use(session({
     name: 'sid',
     //Aici setam un secret pentru a cripta (to encode) sesiunea
-    secret: 'Nu o fost niciodata sa nu fie cumva!',
+    secret: config.get('sessionKey'),
     resave: false,
     saveUninitialized: false,
     cookie: {

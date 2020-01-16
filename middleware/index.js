@@ -1,3 +1,6 @@
+const config = require('config');
+const jwt = require('jsonwebtoken');
+
 var middlewareObject = {};
 
 /*
@@ -80,5 +83,22 @@ middlewareObject.validRegister = function (req, res, next) {
     }
     return next();
 }
+
+/*
+=================================
+        Token Checkers
+=================================
+*/
+
+middlewareObject.validToken = function (req, res, next) {
+    try {
+        const decoded = jwt.verify(req.body.jwt, config.get('jwtPrivateKey'));
+    }
+    catch (ex) {
+        return res.status(400).send('Invalid Token!');
+    }
+    return next();
+}
+
 
 module.exports = middlewareObject;

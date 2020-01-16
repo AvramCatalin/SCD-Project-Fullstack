@@ -1,4 +1,5 @@
 {
     "jwtPrivateKey": "my_jwtPrivateKey",
-    "googleMapsKey": "my_googleMapsKey"
+    "googleMapsKey": "my_googleMapsKey",
+    "sessionKey": "my_sessionKey"
 }

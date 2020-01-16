@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
+const config = require('config');
+const jwt = require('jsonwebtoken');
 
-const UserSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     firstName: {
         type: String,
         required: true,
@@ -31,4 +33,14 @@ const UserSchema = new mongoose.Schema({
     }],
 });
 
-module.exports = mongoose.model('User', UserSchema);
+//adaugam o metoda de autentificare
+userSchema.methods.generateAuthToken = function() {
+    const token = jwt.sign({
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email
+    }, config.get('jwtPrivateKey')); 
+    return token;
+}
+
+module.exports = mongoose.model('User', userSchema);

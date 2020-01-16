@@ -14,6 +14,7 @@ function loadUserData() {
         var startDate = document.querySelector('#startDate').value;
         var endDate = document.querySelector('#endDate').value;
 
+        console.log(`/users/${selectedUser.id}/locations?start=${startDate}&end=${endDate}`);
         xhttp.open('GET', `/users/${selectedUser.id}/locations?start=${startDate}&end=${endDate}`, true);
         xhttp.setRequestHeader('Content-Type', 'application/json');
         xhttp.send();

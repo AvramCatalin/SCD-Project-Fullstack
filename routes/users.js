@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require('express');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 const middleware = require('../middleware');
@@ -84,11 +84,8 @@ router.post('/login', middleware.validLogin, function (req, res) {
             if (user !== null) {
                 //functia de 'compare' de mai jos returneaza true atunci trimitem user-ul
                 if (bcrypt.compareSync(req.body.password, user.password)) {
-                    res.status(200).send(JSON.stringify({
-                        firstName: user.firstName,
-                        lastName: user.lastName,
-                        email: user.email
-                    }));
+                    const token = user.generateAuthToken();
+                    res.status(200).send({jwt: token});
                 }
                 else {
                     //daca userul a fost gasit dar nu e buna parola (raspundem ca si cand nu l-am fi gasit)
