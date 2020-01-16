@@ -57,7 +57,7 @@ function sendJSON(nextPagePath, errorPath, postPath, json) {
       window.location.replace(nextPagePath);
     }
     else {
-      if (this.status == 400) {
+      if (this.status == 404) {
         window.location.replace(errorPath);
       }
     }
