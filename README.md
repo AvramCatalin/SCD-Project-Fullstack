@@ -4,7 +4,9 @@ Tracking app (Backend and Frontend)
 Click [Here](https://github.com/AvramCatalin/SCD-Project-Mobile)
  to acces the Mobile (Android) part of the project!
 
-Make sure to open the app with one of the following commands:
-<p><strong>GOOGLE_MAPS_KEY=<em>YourKey</em> nodemon</strong><p> OR
-<p><strong>GOOGLE_MAPS_KEY=<em>YourKey</em> node app.js</strong><p> 
-Where <em>YourKey</em> is the "Google Maps Javascript API Key" provided to you by Google.
+Make sure to set the following commands before opening the app:
+<ul>
+<li><strong>export my_jwtPrivateKey=<em>YourJWTPrivateKey</em></strong></li> 
+<li><strong>export my_sessionKey=<em>YourSessionKey</em></strong></li> 
+<li><strong>export my_googleMapsKey=<em>YourGoogleMapsKey</em></strong></li> 
+</ul>
