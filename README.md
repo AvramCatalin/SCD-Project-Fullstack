@@ -10,3 +10,5 @@ Make sure to set the following commands before opening the app:
 <li><strong>export my_sessionKey=<em>YourSessionKey</em></strong></li> 
 <li><strong>export my_googleMapsKey=<em>YourGoogleMapsKey</em></strong></li> 
 </ul>
+
+If you are on cmd (Windows) change the "<strong>export</strong>" command with "<strong>set</strong>"
