@@ -12,7 +12,7 @@ const locationRoutes = require('./routes/locations');
 //setam constantele pentru aplicatie
 const app = express();
 const url = 'mongodb://localhost:27017';
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 if (!config.get('jwtPrivateKey')) {
     console.error('FATAL ERROR: jwtPrivateKey is not defined!');
@@ -61,7 +61,7 @@ app.set('view engine', 'ejs');
 mongoose.connect(`${url}/tracking_app`, { useNewUrlParser: true, useUnifiedTopology: true });
 
 //in caz ca primeste o ruta nedeclarata sa faca redirect la login
-app.get('*', function (req, res) {
+app.get('*', (req, res) => {
     res.redirect('/login');
 });
 

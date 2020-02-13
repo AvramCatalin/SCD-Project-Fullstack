@@ -10,7 +10,7 @@ const router = express.Router();
 =================================
 */
 
-router.post('/', middleware.validRegister, function (req, res) {
+router.post('/', middleware.validRegister, (req, res) => {
     //hash-uim parola
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
@@ -23,10 +23,10 @@ router.post('/', middleware.validRegister, function (req, res) {
         isAdmin: false
     });
     //cauta daca nu exista cumva un user cu acelasi email in baza de date
-    User.find({ email: req.body.email.toLowerCase() }, function (err, users) {
+    User.find({ email: req.body.email.toLowerCase() }, (err, users) => {
         //daca nu a gasit nimic, adica array-ul users e gol, salvam user-ul
         if (users.length === 0) {
-            newUser.save(function (err, user) {
+            newUser.save((err, user) => {
                 //trimite ca raspuns status 201 (resursa creata)
                 if (err) {
                     console.log(err);
@@ -49,8 +49,8 @@ router.post('/', middleware.validRegister, function (req, res) {
 =================================
 */
 
-router.get('/', middleware.redirectLogin, function (req, res) {
-    User.find({ isAdmin: false }, function (err, users) {
+router.get('/', middleware.redirectLogin, (req, res) => {
+    User.find({ isAdmin: false }, (err, users) => {
         if (users.length === 0) {
             console.log('There are no users!')
             res.status(404).send('Not found!');
@@ -74,8 +74,8 @@ router.get('/', middleware.redirectLogin, function (req, res) {
 =================================
 */
 
-router.post('/login', middleware.validLogin, function (req, res) {
-    User.findOne({ email: req.body.email.toLowerCase() }, function (err, user) {
+router.post('/login', middleware.validLogin, (req, res) => {
+    User.findOne({ email: req.body.email.toLowerCase() }, (err, user) => {
         if (err) {
             console.log(err);
         }
@@ -85,7 +85,7 @@ router.post('/login', middleware.validLogin, function (req, res) {
                 //functia de 'compare' de mai jos returneaza true atunci trimitem user-ul
                 if (bcrypt.compareSync(req.body.password, user.password)) {
                     const token = user.generateAuthToken();
-                    res.status(200).send({jwt: token});
+                    res.status(200).send({ jwt: token });
                 }
                 else {
                     //daca userul a fost gasit dar nu e buna parola (raspundem ca si cand nu l-am fi gasit)

@@ -11,8 +11,8 @@ const router = express.Router({ mergeParams: true });
 =================================
 */
 
-router.post('/', middleware.validToken, middleware.validLocation, function (req, res) {
-    User.findOne({ email: req.params.userEmail }, function (err, user) {
+router.post('/', middleware.validToken, middleware.validLocation, (req, res) => {
+    User.findOne({ email: req.params.userEmail }, (err, user) => {
         if (err) {
             console.log(err);
         }
@@ -22,7 +22,7 @@ router.post('/', middleware.validToken, middleware.validLocation, function (req,
                     lat: (Number)(req.body.lat),
                     long: (Number)(req.body.long)
                 });
-                user.save(function (err, user) {
+                user.save((err, user) => {
                     if (err) {
                         console.log(err);
                     }
@@ -45,8 +45,8 @@ router.post('/', middleware.validToken, middleware.validLocation, function (req,
 =================================
 */
 
-router.get('/', middleware.redirectLogin, function (req, res) {
-    User.findOne({ email: req.params.userEmail.toLowerCase() }).sort({ date: 'asc' }).exec(function (err, user) {
+router.get('/', middleware.redirectLogin, (req, res) => {
+    User.findOne({ email: req.params.userEmail.toLowerCase() }).sort({ date: 'asc' }).exec((err, user) => {
         if (err) {
             console.log(err);
         }

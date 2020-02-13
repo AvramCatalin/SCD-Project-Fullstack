@@ -11,11 +11,11 @@ const router = express.Router();
 =================================
 */
 
-router.get('/register', middleware.redirectMonitor, function (req, res) {
+router.get('/register', middleware.redirectMonitor, (req, res) => {
     res.render('register', { error: req.query.error });
 });
 
-router.post('/admin', middleware.redirectMonitor, middleware.validRegister, function (req, res) {
+router.post('/admin', middleware.redirectMonitor, middleware.validRegister, (req, res) => {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
     const newAdmin = new User({
@@ -25,9 +25,9 @@ router.post('/admin', middleware.redirectMonitor, middleware.validRegister, func
         password: hash,
         isAdmin: true
     });
-    User.find({ email: req.body.email.toLowerCase() }, function (err, users) {
+    User.find({ email: req.body.email.toLowerCase() }, (req, res) => {
         if (users.length === 0) {
-            newAdmin.save(function (err, user) {
+            newAdmin.save((err, user) => {
                 if (err) {
                     console.log(err);
                 }
@@ -48,12 +48,12 @@ router.post('/admin', middleware.redirectMonitor, middleware.validRegister, func
 =================================
 */
 
-router.get('/login', middleware.redirectMonitor, function (req, res) {
+router.get('/login', middleware.redirectMonitor, (req, res) => {
     res.render('login', { error: req.query.error });
 });
 
-router.post('/login', middleware.redirectMonitor, middleware.validLogin, function (req, res) {
-    User.findOne({ email: req.body.email.toLowerCase() }, function (err, user) {
+router.post('/login', middleware.redirectMonitor, middleware.validLogin, (req, res) => {
+    User.findOne({ email: req.body.email.toLowerCase() }, (err, user) => {
         if (err) {
             console.log(err);
         }
@@ -76,8 +76,8 @@ router.post('/login', middleware.redirectMonitor, middleware.validLogin, functio
 });
 
 // <=> Deautentificare (stiu ca nu exista cuvantul) <=>
-router.get('/logout', middleware.denyLogout, function (req, res) {
-    req.session.destroy(function (err) {
+router.get('/logout', middleware.denyLogout, (req, res) => {
+    req.session.destroy( (err) => {
         if (err) {
             console.log(err)
         }
@@ -92,7 +92,7 @@ router.get('/logout', middleware.denyLogout, function (req, res) {
 =================================
 */
 
-router.get('/monitor', middleware.redirectLogin, function (req, res) {
+router.get('/monitor', middleware.redirectLogin, (req, res) => {
     res.render('monitor', {
         adminEmail: req.session.adminEmail,
         googleMapsKey: config.get('googleMapsKey')
