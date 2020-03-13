@@ -1,5 +1,8 @@
 //importam modulele instalate cu npm
+const logger = require('./helpers/consoleLogger');
 const express = require('express');
+const helmet = require('helmet');
+const morgan = require('morgan');
 const mongoose = require('mongoose');
 const config = require('config');
 const session = require('express-session');
@@ -14,22 +17,32 @@ const app = express();
 const url = 'mongodb://localhost:27017';
 const port = process.env.PORT || 3000;
 
+logger('cyan', `App env: ${app.get('env')}`);
+
 if (!config.get('jwtPrivateKey')) {
-    console.error('FATAL ERROR: jwtPrivateKey is not defined!');
+    logger('red', 'FATAL ERROR: jwtPrivateKey is not defined!');
     process.exit(1);
 }
 
 if (!config.get('sessionKey')) {
-    console.error('FATAL ERROR: sessionKey is not defined!');
+    logger('red', 'FATAL ERROR: sessionKey is not defined!');
     process.exit(1);
 }
 
 if (!config.get('googleMapsKey')) {
-    console.error('ERROR: googleMapsKey is not defined!');
+    logger('red', 'ERROR: googleMapsKey is not defined!');
 }
 
 //setam express sa foloseasca json
 app.use(express.json());
+
+//securizam aplicatia cu helmet
+app.use(helmet());
+
+if (process.env.NODE_ENV === 'development') {
+    //setam log-ul sa fie de tip 'tiny'
+    app.use(morgan('tiny'));
+}
 
 //setam optiunea pentru a putea accesa fisiere js si css din interiorul celor ejs 
 app.use('/', express.static(__dirname + '/public'));
@@ -58,7 +71,9 @@ app.use('/users/:userEmail/locations', locationRoutes);
 app.set('view engine', 'ejs');
 
 //conectam aplicatia la baza de date
-mongoose.connect(`${url}/tracking_app`, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(`${url}/tracking_app`, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => logger('green', 'Connected to MongoDB!'))
+    .catch((error) => logger('red', error));
 
 //in caz ca primeste o ruta nedeclarata sa faca redirect la login
 app.get('*', (req, res) => {
@@ -67,5 +82,5 @@ app.get('*', (req, res) => {
 
 //ascultam pe portul declarat mai sus
 app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
-})
+    logger('yellow', `Listening on port ${port}`);
+});
